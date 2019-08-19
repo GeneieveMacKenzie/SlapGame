@@ -1,12 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="game.css">
+    <title>Slapgame</title>
+
 </head>
+
 <body>
-    
+    <div class="container-fluid img-background" style="color:rgb(148, 203, 248)">
+        <div class="row pt-3">
+            <div class="col-12 d-flex justify-content-center pb-3">
+                <h1>Dumbledore vs Grindelwald</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <img src="https://30qznn49x87f3vppon30j0w1-wpengine.netdna-ssl.com/wp-content/uploads/2019/03/Grindelwald-Dumbledore-912x456.jpg"
+                    alt="dumbledoreVsGrindelwald" class="img-position shadow">
+            </div>
+        </div>
+        <div class="row d-flex justify-content-around pb-5" style="color: rgb(58, 58, 100)">
+            <div class="card" style = "width: 30%">
+                <div class="card-body" style="background-color: rgb(227, 224, 231)">
+                    <div class="row">
+                        <h4 class="pl-3">Spells</h4>
+                        <div class="col-12">
+                            <button class="btn btn-md" onclick="attack('rictusempra')">Rictusempra</button>
+                            <button class="btn btn-md" onclick="attack('impedimenta')">Impedimenta</button>
+                            <button class="btn btn-md" onclick="attack('stupefy')">Stupefy</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4 class="pt-4 pl-3">Inventory</h4>
+                        <div class="col-12">
+                            <button class="btn btn-md" id="items" onclick="giveDeluminator()">Deluminator <span id="buttonCountDeluminator">x3</span></button>
+                            <button class="btn btn-md" id="items" onclick="giveFawkes()">Fawkes <span id="buttonCountFawkes">x3</span></button>
+                            <button class="btn btn-md" id="items" onclick="giveInvisibilityCloak()">Invisibility Cloak <span id="buttonCountCloak">x1</span></button>
+                        </div>
+                    </div>
+                    <div class="row d-flex flex-row justify-content-around pt-5">
+                        <h4>Health= <span id="healthDumbledore">300</span></h4>
+                        <h4>Hits= <span id="hitsDumbledore">0</span></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style = "width: 30%">
+                <div class="card-body" style="background-color: rgb(227, 224, 231)">
+                    <div class="row">
+                        <h4 class="pl-3">Spells</h4>
+                        <div class="col-12">
+                            <button class="btn btn-md" onclick="attack('imperio')">Imperio</button>
+                            <button class="btn btn-md" onclick="attack('crucio')">Crucio</button>
+                            <button class="btn btn-md" onclick="attack('avadaKedavra')">Avada Kedavra</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4 class="pt-3 pl-3">Inventory</h4>
+                        <div class="col-12">
+                            <button class="btn btn-md" id="items" onclick="givePendant()">Pendant <span id="buttonCountPendant">x3</span></button>
+                            <button class="btn btn-md" id="items" onclick="giveSilverTongue()">Silver Tongue <span id="buttonCountWit">x3</span></button>
+                            <button class="btn btn-md" id="items" onclick="giveElderWand()">Elder Wand <span id="buttonCountWand">x1</span></button>
+                        </div>
+                    </div>
+                    <div class="row d-flex flex-row justify-content-around pt-5">
+                        <h4>Health= <span id="healthGrindelwald">300</span></h4>
+                        <h4>Hits= <span id="hitsGrindelwald">0</span></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center pb-5">
+            <button class="btn-lg" id="instructions" style="background-color: rgb(227, 224, 231)">Stats</button>
+            <div id="instructionModal" class="modal">
+                <div class="modal-content d-flex flex-row">
+                    <div class="col-6">
+                        <dl>
+                            <h3>Dumbledore's Charms</h3>
+                            <dt>Rictusempra <span style="color:rgb(184, 10, 10)">5 damage</span></dt>
+                            <dd>To make your target weaken with laughter</dd>
+                            <dt>Impedimenta <span style="color:rgb(184, 10, 10)">10 damage</span></dt>
+                            <dd>To slow your target's movement</dd>
+                            <dt>Stupify <span style="color:rgb(184, 10, 10)">15 damage</span></dt>
+                            <dd>To make your target unconscious</dd>
+                            <h3>Dumbledore's Items</h3>
+                            <dt>Diluminator <span style="color:rgb(61, 184, 44)">+10 health</span></dt>
+                            <dd>Removes all the light in the area</dd>
+                            <dt>Invisibility Cloak <span style="color:rgb(61, 184, 44)">+20 health</span></dt>
+                            <dd>This will make you invisible to your target</dd>
+                            <dt>Fawkes <span style="color:rgb(61, 184, 44)">+30 health</span></dt>
+                            <dd>Dumbledores pheonix has incredible healing powers</dd>
+                        </dl>
+                    </div>
+                    <div class="col-6">
+                        <dl>
+                            <h3>Grindelwald's Curses</h3>
+                            <dt>Imperius Curse: Imperio <span style="color:rgb(184, 10, 10)">10 damage</span></dt>
+                            <dd>To control your target's actions</dd>
+                            <dt>Cruciatus Curse: Crucio <span style="color:rgb(184, 10, 10)">20 damage</span></dt>
+                            <dd>To cause incredible pain to your target</dd>
+                            <dt>The Killing Curse: Avada Kedavra <span style="color:rgb(184, 10, 10)">30 damage</span>
+                            </dt>
+                            <dd>To kill your target</dd>
+                            <h3>Grindelwald's Items</h3>
+                            <dt>Pendant <span style="color:rgb(61, 184, 44)">+5 health</span></dt>
+                            <dd>This is a blood oath allowing you to escape death</dd>
+                            <dt>Silver Tongue <span style="color:rgb(61, 184, 44)">+10 health</span></dt>
+                            <dd>Your wit will stall the battle</dd>
+                            <dt>Elder Wand <span style="color:rgb(61, 184, 44)">+15 health</span></dt>
+                            <dd>Defeats all other wands</dd>
+                        </dl>
+                    </div>
+                    <span class="close">&times;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
 </body>
+
 </html>
